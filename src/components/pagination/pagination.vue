@@ -1,82 +1,112 @@
 <template>
     <div class="pagination">
-                <a class="pagination__link pagination__prev" href="#">&laquo;</a>
-
-                <div class="pagination__group">
-                    <span><a class="pagination__link" href="#">1</a></span>
-                    <a class="pagination__link pagination__link_active" href="#">2</a>
-                    <a class="pagination__link" href="#">3</a>
-                    <a class="pagination__link" href="#">4</a>
-                    <a class="pagination__link" href="#">5</a>
-                    <a class="pagination__link" href="#">6</a>
-                </div>
-                <a class="pagination__link pagination__next" href="#">&raquo;</a>
-    </div>   
+    <button
+      v-if="activePage !== 1"
+      class="pagination__button-page-back"
+      @click="$emit('page-back')"
+    />
+    <div class="pagination__main">
+      <button
+        v-for="page in pagesCount"
+        :key="page"
+        :class="assingClass(page)"
+        @click="$emit('set-page', page)"
+      >
+        {{ page + 1 }}
+      </button>
+    </div>
+    <button
+      v-if="activePage !== Math.ceil(productData.length / 9)"
+      class="pagination__button-page-forward"
+      @click="$emit('page-forward')"
+    />
+  </div> 
 </template>
 
 <script>
+import { computed } from '@vue/reactivity';
 export default {
   name: "Pagination",
   props: {
-    productcardData: {
+      product: {
       type: Object,
-      default: Function,
+      default: () => {},
     },
     activePage: {
       type: Number,
       default: 1,
     },
   },
-  methods: {
-    pagesCount() {
-      return [...Array(Math.ceil(this.cardData.length / 9)).keys()];
-    },
-    assingClass(page) {
-      if (page + 1 === this.activePage) {
+
+setup(props) {
+    const pagesCount = computed(() => [...Array(Math.ceil(props.cardData.length / 9)).keys()]);
+    const assingClass = function(page) {
+      if (page + 1 === props.activePage) {
         return "pagination__page active";
       } else {
         return "pagination__page";
       }
-    },
-  },
+    } 
+    return {
+      pagesCount,
+      assingClass
+    }
+  }
 };
 </script>
 
 <style scoped lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap");
+@import "/src/assets/styles/variables.scss";
+
 .pagination {
   display: flex;
-  justify-content: space-between;
-  margin-top: 28px;
-
-   &__link {
-     line-height: 1;
-     text-decoration: none;
-     line-height: 40px;
-      font-size: 18px;
-      font-weight: 400;
-  
-   }
-
-   &__group {
-      background-color: $background-500;
-      display: flex;
-      gap: 30px;
-      padding: 0 30px;
-      border-radius: 40px;
+  justify-content: center;
+  margin-bottom: 30px;
+  &__button-page-back {
+    width: 37px;
+    border: none;
+    border-radius: 50%;
+    margin-right: 20px;
+    background-color: $button-secondary-color;
+    // background-image: url(~@/assets/images/pagination-arrow-back.svg);
+    background-repeat: no-repeat;
+    background-position: bottom 50% left 50%;
+    cursor: pointer;
+  }
+  &__button-page-forward {
+    width: 37px;
+    border: none;
+    border-radius: 50%;
+    background-color: $button-secondary-color;
+    // background-image: url(~@/assets/images/pagination-arrow-forward.svg);
+    background-repeat: no-repeat;
+    background-position: bottom 50% left 50%;
+    margin-left: 20px;
+    cursor: pointer;
+  }
+  &__main {
+    background-color: $button-secondary-color;
+    border-radius: 25px;
+    display: flex;
+    .active {
+      background-color: $button-primary-color;
+      border-radius: 50%;
     }
-  
-    &__link_active {
-      background-color: $primary-normal;
-      padding: 0 15px;
-      border-radius: 40px;
-      color: $background-0;
+  }
+      &__page {
+      height: 37px;
+      width: 37px;
+      text-decoration: none;
+      display: inline-block;
+      color: $main-text-color;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      .active {
+        background-color: $button-primary-color;
+        border-radius: 50%;
+      }
     }
-  
-   &__prev, &__next {
-      background-color: $background-500;
-      padding: 0 15px;
-      border-radius: 40px;
-    }
- }
+}
 </style>

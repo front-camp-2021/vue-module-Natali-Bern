@@ -9,32 +9,34 @@
 
 <script>
 import Slider from "@vueform/slider";
-import { findMinMax } from "../helper-functions/findMinMax";
+import { ref } from '@vue/reactivity';
 export default {
-  name: "PriceSlider",
+  name: "FilterSlider",
   components: {
     Slider,
   },
   props: {
-    cards: {
+    products: {
       type: Array,
-      default: Function,
+      default: () => [],
     },
     priceRange: {
       type: Array,
-      default: Function,
+      default: () => [1,1],
     }
   },
-  data: function () {
-    return {
-      value: findMinMax(this.cards),
-    };
-  },
-  methods: {
-    setPriceRange() {
+
+
+    setup(props) {
+    const range = ref(props.priceRange);
+    const setPriceRange = function() {
       const values = document.querySelectorAll(".slider-tooltip");
       return [values[0].textContent, values[1].textContent];
-    },
+    }
+    return {
+      range,
+      setPriceRange,
+    }
   },
 };
 </script>

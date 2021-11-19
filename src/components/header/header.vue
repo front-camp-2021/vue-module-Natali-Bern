@@ -1,17 +1,10 @@
 <template>
 <header class="header">
-    <div class="container">
-    <header class="header">
-            <div class="header__logo">
-                <img class="header__logo-img" src="../../../assets/images/logo.svg" alt="logo image"> 
-                <span class="header__logo-text">
-                    Online Store
-                </span>
-            </div>
-    </header>
-
+    <div class="header__logo" />
+    <div class="header__text">
+      Online Store
     </div>
-    </header>
+  </header>
 </template>
 
 <script>
@@ -22,31 +15,25 @@ export default {
 
 <style scoped lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap");
-.header__logo {
-    display: flex;
-    align-items: center;
-    padding-bottom: 36px;
-  
-  
-    &-img {
-        width: 91px;
-        height: 72px;
-    }
-  
-    &-text {
-        display: inline-block;
-        padding-left: 22px;
-        font-weight: 600;
-        font-size: 48px;
-        color: #7E72F2;
-  }
-}
+@import "/src/assets/styles/variables.scss";
 
-.header__logo-text {
-    display: inline-block;
-    padding-left: 22px;
-    font-weight: 600;
+.header {
+  display: flex;
+  align-items: center;
+  &__logo {
+    align-self: center;
+    // background-image: url(~@/assets/images/logo.svg);
+    margin: 10px;
+    width: 90px;
+    height: 70px;
+    background-size: 100%;
+    background-repeat: no-repeat;
+  }
+  &__text {
     font-size: 48px;
-    color: #7E72F2;   
+    line-height: 27px;
+    color: $secondary-text-color;
+    font-weight: $font-weight-large;
+  }
 }
 </style>

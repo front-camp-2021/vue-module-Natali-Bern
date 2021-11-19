@@ -21,7 +21,7 @@
 
 <script>
 export default {
-  name: "Checkbox",
+  name: "FilterCheckbox",
   props: {
     itemName: {
       type: String,
@@ -42,6 +42,8 @@ export default {
 
 <style scoped lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap");
+@import "/src/assets/styles/variables.scss";
+
 .filters__checkbox-square {
   cursor: pointer;
 }
